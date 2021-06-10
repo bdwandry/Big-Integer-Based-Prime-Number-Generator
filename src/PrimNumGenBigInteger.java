@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 
 public class PrimNumGenBigInteger {
@@ -31,13 +34,17 @@ public class PrimNumGenBigInteger {
         return true;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, FileNotFoundException {
+        File file = new File(System.getProperty("user.home") + "/Desktop" + "/PrimeNumber.txt");
+        PrintWriter out = new PrintWriter(file);
         while (true) {
             baseNum = baseNum.add(BigInteger.valueOf(1));
             boolean flag = checkNun();
 
             if (flag) {
                 System.out.println("Prime Number: " + baseNum);
+                out.println("Prime Number: " + baseNum);
+                out.flush();
             }
         }
     }
