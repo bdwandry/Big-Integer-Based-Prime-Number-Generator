@@ -37,42 +37,66 @@ public class PrimNumGenBigInteger {
     }
 
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
-        File file = new File(System.getProperty("user.home") + "/Desktop" + "/PrimeNumber.txt");;
-        PrintWriter out;
+        File file = new File(System.getProperty("user.home") + "/Desktop" + "/PrimeNumber.txt");
+        PrintWriter out = null;
         if (file.isFile()) {
-            System.out.print("File Already Exit. Would you like to continue? <Yes> or <No>: ");
-            Scanner in = new Scanner(System.in);
-            String flag = in.nextLine();
+            if (file.length() != 0) {
+                System.out.print("File Already Exit. Would you like to continue? <Yes> or <No>: ");
+                Scanner in = new Scanner(System.in);
+                String flag = in.nextLine();
 
-            while (!(flag.equalsIgnoreCase("Yes") || flag.equalsIgnoreCase("No"))) {
-                System.out.println("INVALID ANSWER. TYPE YES OR NO!");
-                System.out.print("Enter 'Yes' or 'No': ");
-                flag = in.nextLine();
-            }
-
-            if (flag.equalsIgnoreCase("Yes")) {
-                ArrayList<String> tempArr = new ArrayList<>();
-                Scanner lastLine = new Scanner(file);
-                while (lastLine.hasNextLine()) {
-                    String specificLine = lastLine.nextLine();
-                    tempArr.add(specificLine);
+                while (!(flag.equalsIgnoreCase("Yes") || flag.equalsIgnoreCase("No"))) {
+                    System.out.println("INVALID ANSWER. TYPE YES OR NO!");
+                    System.out.print("Enter 'Yes' or 'No': ");
+                    flag = in.nextLine();
                 }
 
-                out = new PrintWriter(file);
-                for (int i = 0; i < tempArr.size(); i++) {
-                    out.println(tempArr.get(i));
+                if (flag.equalsIgnoreCase("Yes")) {
+                    ArrayList<String> tempArr = new ArrayList<>();
+                    Scanner lastLine = new Scanner(file);
+                    while (lastLine.hasNextLine()) {
+                        String specificLine = lastLine.nextLine();
+                        tempArr.add(specificLine);
+                    }
+
+                    out = new PrintWriter(file);
+                    for (int i = 0; i < tempArr.size(); i++) {
+                        out.println(tempArr.get(i));
+                        out.flush();
+                    }
+                    String[] splitString = tempArr.get(tempArr.size() - 1).split(" ");
+                    counter = new BigInteger(splitString[0].substring(0, splitString[0].length() - 1));
+                    baseNum = new BigInteger(splitString[8]);
+
+                } else {
+                    out = new PrintWriter(file);
+
+                    long startTime = System.nanoTime();
+                    long endTime = System.nanoTime();
+                    long timeElapsed = endTime - startTime;
+                    counter = counter.add(BigInteger.valueOf(1));
+                    out.println(counter + ". Time To Calculate: " + (timeElapsed/1000000 ) + " ms; Prime Number: " + baseNum);
                     out.flush();
                 }
-                String[] splitString = tempArr.get(tempArr.size() - 1).split(" ");
-                counter = new BigInteger(splitString[0].substring(0, splitString.length - 4));
-                baseNum = new BigInteger(splitString[8]);
             } else {
-                System.out.println("Restarting the Program");
                 out = new PrintWriter(file);
-            }
 
+                long startTime = System.nanoTime();
+                long endTime = System.nanoTime();
+                long timeElapsed = endTime - startTime;
+                counter = counter.add(BigInteger.valueOf(1));
+                out.println(counter + ". Time To Calculate: " + (timeElapsed/1000000 ) + " ms; Prime Number: " + baseNum);
+                out.flush();
+            }
         } else {
             out = new PrintWriter(file);
+
+            long startTime = System.nanoTime();
+            long endTime = System.nanoTime();
+            long timeElapsed = endTime - startTime;
+            counter = counter.add(BigInteger.valueOf(1));
+            out.println(counter + ". Time To Calculate: " + (timeElapsed/1000000 ) + " ms; Prime Number: " + baseNum);
+            out.flush();
         }
 
         while (true) {
